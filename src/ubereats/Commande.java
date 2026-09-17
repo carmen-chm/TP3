@@ -2,13 +2,6 @@ package ubereats;
 
 import java.util.ArrayList;
 
-/**
- * Classe Commande : objet metier central de l'application.
- * Reliee au Client et au Restaurant par une association, et au Livreur
- * par une agregation (0..1 livreur pour 0..* commandes).
- *
- * @author Equipe Uber Eats - TP3 POO Java
- */
 public class Commande {
 
     private String date;
