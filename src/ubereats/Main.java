@@ -4,18 +4,18 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //Creation des objets
+
         Client client = new Client(1, "Lea", "lea@mail.com");
         Restaurant restaurant = new Restaurant(2, "Chez Mario", "mario@mail.com");
         Livreur livreur = new Livreur(3, "Hugo", "hugo@mail.com");
 
-        //Connexion des utilisateurs
+        //connexion
         client.connection();
         restaurant.connection();
         livreur.connection();
         restaurant.menu("Pizza");
 
-        //Demonstration du polymorphisme (methode abstraite afficherActivite)
+        //polymorphisme
         Utilisateur[] tousLesUtilisateurs = { client, restaurant, livreur };
         for (Utilisateur u : tousLesUtilisateurs) {
             u.afficherActivite();
@@ -39,7 +39,7 @@ public class Main {
 
         //Laisser pourboire et avis
         client.laisserAvis(commande, "Livraison rapide, livreur tres sympa !");
-        restaurant.afficherAvis();      // <-- ajout : verifie que l'avis est bien remonte au resto
+        restaurant.afficherAvis();
         livreur.afficherAvis();
         client.laisserPourboire(commande, 3.0);
     }

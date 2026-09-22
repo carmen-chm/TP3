@@ -2,13 +2,13 @@ package ubereats;
 
 public abstract class Utilisateur {
 
-    // Attributs : visibilite protected pour etre accessibles aux classes filles
+    // Attributs
     protected int ID;
     protected String nom;
     protected String mail;
     protected boolean connecte;
 
-    /** Constructeur par defaut (sans parametre). */
+    // Constructeur par défaut
     public Utilisateur() {
         this.ID = 0;
         this.nom = "inconnu";
@@ -16,7 +16,7 @@ public abstract class Utilisateur {
         this.connecte = false;
     }
 
-    /** Constructeur surcharge avec parametres. */
+    // Constructeur surchage
     public Utilisateur(int ID, String nom, String mail) {
         this.ID = ID;
         this.nom = nom;
@@ -24,31 +24,20 @@ public abstract class Utilisateur {
         this.connecte = false;
     }
 
-    /** Connexion de l'utilisateur a l'application. */
+    // Connexion à la plateforme
     public void connection() {
         this.connecte = true;
         System.out.println("[" + nom + "] connexion() -> connecte a l'application");
     }
 
-    /** Affiche le profil de l'utilisateur. */
-    public void profil() {
-        System.out.println("[" + nom + "] profil() -> ID=" + ID + ", mail=" + mail);
-    }
-
-    /** Modifie le mail du profil. */
-    public void modifierProfile(String nouveauMail) {
-        this.mail = nouveauMail;
-        System.out.println("[" + nom + "] modifierProfile() -> nouveau mail : " + mail);
-    }
-
-    // Accesseurs (encapsulation)
+    // Accesseurs
     public String getNom() {
         return nom;
     }
-
     public int getID() {
         return ID;
     }
 
+    // Methode abstraite
     public abstract void afficherActivite();
 }
