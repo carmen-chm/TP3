@@ -2,22 +2,14 @@ package ubereats;
 
 import java.util.ArrayList;
 
-/**
- * Classe Livreur : herite d'Utilisateur.
- * Relation d'AGREGATION avec Commande (0..1 livreur pour 0..* commandes) :
- * le livreur possede une collection de commandes, mais les commandes
- * continuent d'exister meme sans livreur affecte.
- *
- * @author Equipe Uber Eats - TP3 POO Java
- */
-public class Livreur extends Utilisateur {
+public class Livreur extends Utilisateur implements Evaluable {
 
+    private HistoriqueCommandes courses;
     private boolean statutDispo;
     private String position;
     private double solde;
+    private ArrayList<String> avis;
 
-    // Agregation : 0..* commandes prises en charge par ce livreur
-    private ArrayList<Commande> courses;
 
     /** Constructeur par defaut. */
     public Livreur() {
@@ -25,7 +17,8 @@ public class Livreur extends Utilisateur {
         this.statutDispo = false;
         this.position = "position inconnue";
         this.solde = 0.0;
-        this.courses = new ArrayList<Commande>();
+        this.courses = new HistoriqueCommandes();
+        this.avis = new ArrayList<String>();
     }
 
     /** Constructeur surcharge. */
@@ -34,7 +27,8 @@ public class Livreur extends Utilisateur {
         this.statutDispo = true;
         this.position = "Depart";
         this.solde = 0.0;
-        this.courses = new ArrayList<Commande>();
+        this.courses = new HistoriqueCommandes();
+        this.avis = new ArrayList<String>();
     }
 
     /** Cas d'utilisation "Indiquer sa disponibilite". */
@@ -43,14 +37,11 @@ public class Livreur extends Utilisateur {
         System.out.println("[" + nom + "] disponibilite = " + dispo);
     }
 
-    /**
-     * Cas d'utilisation "Accepter ou non la course".
-     * Message proposerCourse() du diagramme de sequences.
-     */
+
     public boolean reserverCourse(Commande c) {
         System.out.println("   --> proposerCourse() recue par " + nom);
         if (statutDispo) {
-            courses.add(c);            // agregation : la commande rejoint les courses du livreur
+            courses.ajouterCommande(c);    // <-- change : ajouterCommande() au lieu de add()
             c.affecterLivreur(this);
             statutDispo = false;
             System.out.println("[" + nom + "] reserverCourse() -> course acceptee");
@@ -61,7 +52,6 @@ public class Livreur extends Utilisateur {
         return false;
     }
 
-    /** Cas d'utilisation "Afficher le chemin pris" : mise a jour de la position. */
     public void modifierPosition(String nouvellePosition) {
         this.position = nouvellePosition;
         System.out.println("[" + nom + "] modifierPosition() -> " + position);
@@ -80,16 +70,33 @@ public class Livreur extends Utilisateur {
         statutDispo = true;
     }
 
-    /** Cas d'utilisation "Consulter les avis". */
-    public void consulterAvis(Commande c) {
-        System.out.println("[" + nom + "] consulterAvis() -> \"" + c.getAvis() + "\"");
-    }
-
     public String getPosition() {
         return position;
     }
 
     public int nbCourses() {
-        return courses.size();
+        return courses.nbCommandes();   // <-- change : nbCommandes() au lieu de size()
+    }
+
+    @Override
+    public void recevoirAvis(String avis) {
+        this.avis.add(avis);
+        System.out.println("[" + nom + "] recevoirAvis() -> avis enregistre");
+    }
+
+    @Override
+    public void afficherAvis() {
+        System.out.println("[" + nom + "] avis recus : " + avis);
+    }
+
+    @Override
+    public double getNoteMoyenne() {
+        return avis.size();
+    }
+
+    @Override
+    public void afficherActivite() {
+        System.out.println("[" + nom + "] Livreur - disponible: " + statutDispo
+                + ", position: " + position + ", courses effectuees: " + courses.nbCommandes());
     }
 }

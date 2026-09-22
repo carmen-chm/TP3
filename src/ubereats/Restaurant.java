@@ -2,35 +2,30 @@ package ubereats;
 
 import java.util.ArrayList;
 
-/**
- * Classe Restaurant : herite d'Utilisateur.
- * Correspond a l'acteur "Restaurateur" du diagramme de cas d'utilisation.
- *
- * @author Equipe Uber Eats - TP3 POO Java
- */
-public class Restaurant extends Utilisateur {
+public class Restaurant extends Utilisateur implements Evaluable {
 
     private boolean statutDispo;
     private String adresse;
     private ArrayList<String> menu;
     private double solde;
+    private ArrayList<String> avis;   // <-- nouvel attribut
 
-    /** Constructeur par defaut. */
     public Restaurant() {
         super();
         this.statutDispo = false;
         this.adresse = "adresse inconnue";
         this.menu = new ArrayList<String>();
         this.solde = 0.0;
+        this.avis = new ArrayList<String>();   // <-- initialisation
     }
 
-    /** Constructeur surcharge. */
     public Restaurant(int ID, String nom, String mail) {
         super(ID, nom, mail);
         this.statutDispo = true;
         this.adresse = "5 avenue des Gourmets";
         this.menu = new ArrayList<String>();
         this.solde = 0.0;
+        this.avis = new ArrayList<String>();   // <-- initialisation
     }
 
     /** Cas d'utilisation "Indiquer sa disponibilite". */
@@ -71,8 +66,25 @@ public class Restaurant extends Utilisateur {
         c.changerStatut("commande prete");
     }
 
-    /** Cas d'utilisation "Consulter les avis". */
-    public void consulterAvis(Commande c) {
-        System.out.println("[" + nom + "] consulterAvis() -> \"" + c.getAvis() + "\"");
+    @Override
+    public void recevoirAvis(String avis) {
+        this.avis.add(avis);
+        System.out.println("[" + nom + "] recevoirAvis() -> avis enregistre");
+    }
+
+    @Override
+    public void afficherAvis() {
+        System.out.println("[" + nom + "] avis recus : " + avis);
+    }
+
+    @Override
+    public double getNoteMoyenne() {
+        return avis.size();   // simplifie : nb d'avis (ou calcul reel si tes avis contiennent une note)
+    }
+
+    @Override
+    public void afficherActivite() {
+        System.out.println("[" + nom + "] Restaurant - disponible: " + statutDispo
+                + ", plats au menu: " + menu.size());
     }
 }

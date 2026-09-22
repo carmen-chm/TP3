@@ -1,26 +1,23 @@
 package ubereats;
 
-import java.util.ArrayList;
-
-
 public class Client extends Utilisateur {
 
     private String adresse;
-    private ArrayList<Commande> historique;   // 1 client -> 0..* commandes
+    private HistoriqueCommandes historique;   // 1 client -> 0..* commandes
     private double solde;
 
 
     public Client() {
-        super();                              // appel du constructeur de la superclasse
+        super();
         this.adresse = "adresse inconnue";
-        this.historique = new ArrayList<Commande>();
+        this.historique = new HistoriqueCommandes();
         this.solde = 0.0;
     }
 
     public Client(int ID, String nom, String mail) {
-        super(ID, nom, mail);                 // super(...) : 1ere instruction obligatoire
+        super(ID, nom, mail);
         this.adresse = "12 rue de Paris";
-        this.historique = new ArrayList<Commande>();
+        this.historique = new HistoriqueCommandes();
         this.solde = 100.0;
     }
 
@@ -30,11 +27,9 @@ public class Client extends Utilisateur {
         Commande c = new Commande(this, restaurant);
         c.ajouterPlat(plat, prix);
         c.calculerMontant();
-        historique.add(c);
+        historique.ajouterCommande(c);          // <-- changement ici
 
-        // <<includes>> : le paiement est OBLIGATOIRE, il est donc toujours appele
         payer(c, modePaiement);
-
         restaurant.prendreCommande(c);
         System.out.println("   <-- confirmationCommande()");
         return c;
@@ -74,11 +69,22 @@ public class Client extends Utilisateur {
     public void laisserAvis(Commande c, String avis) {
         System.out.println("[" + nom + "] laisserAvis(\"" + avis + "\")");
         c.enregistrerAvis(avis);
+
+        // on transmet aussi l'avis au restaurant et au livreur concernes
+        Restaurant r = c.getRestaurant();
+        if (r != null) {
+            r.recevoirAvis(avis);
+        }
+
+        Livreur l = c.getLivreur();
+        if (l != null) {
+            l.recevoirAvis(avis);
+        }
     }
 
 
     public void laisserPourboire(Commande c, double montant) {
-        if (montant > 0) {                     // opt [le client souhaite laisser un pourboire]
+        if (montant > 0) {
             solde = solde - montant;
             Livreur l = c.getLivreur();
             if (l != null) {
@@ -87,8 +93,13 @@ public class Client extends Utilisateur {
             System.out.println("[" + nom + "] laisserPourboire(" + montant + " EUR) -> envoye au livreur");
         }
     }
+    @Override
+    public void afficherActivite() {
+        System.out.println("[" + nom + "] Client - solde: " + solde
+                + " EUR, commandes passees: " + historique.nbCommandes());
+    }
 
     public int nbCommandes() {
-        return historique.size();
+        return historique.nbCommandes();        // <-- changement ici
     }
 }

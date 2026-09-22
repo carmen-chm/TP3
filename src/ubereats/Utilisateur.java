@@ -1,13 +1,6 @@
 package ubereats;
 
-/**
- * Classe mere de l'application Uber Eats.
- * Correspond a l'acteur generique "Utilisateur" du diagramme de cas
- * d'utilisation, dont Client, Livreur et Restaurant sont des specialisations.
- *
- * @author Equipe Uber Eats - TP3 POO Java
- */
-public class Utilisateur {
+public abstract class Utilisateur {
 
     // Attributs : visibilite protected pour etre accessibles aux classes filles
     protected int ID;
@@ -56,4 +49,6 @@ public class Utilisateur {
     public int getID() {
         return ID;
     }
+
+    public abstract void afficherActivite();
 }
