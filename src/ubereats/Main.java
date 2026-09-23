@@ -16,9 +16,10 @@ public class Main {
         restaurant.menu("Pizza");
 
         //polymorphisme
-        client.afficherActivite();
-        restaurant.afficherActivite();
-        livreur.afficherActivite();
+        Utilisateur[] tousLesUtilisateurs = { client, restaurant, livreur };
+        for (Utilisateur u : tousLesUtilisateurs) {
+            u.afficherActivite();
+        }
 
         //Passer commande
         Commande commande = client.commander(restaurant, "Pizza", 12.50, "CB");
