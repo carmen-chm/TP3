@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Livreur extends Utilisateur implements Evaluable {
 
-    //Attributs
     private HistoriqueCommandes courses;
     private boolean statutDispo;
     private String position;
@@ -12,7 +11,7 @@ public class Livreur extends Utilisateur implements Evaluable {
     private ArrayList<String> avis;
 
 
-    //Constructeur par defaut
+    /** Constructeur par defaut. */
     public Livreur() {
         super();
         this.statutDispo = false;
@@ -22,7 +21,7 @@ public class Livreur extends Utilisateur implements Evaluable {
         this.avis = new ArrayList<String>();
     }
 
-    //Constructeur surcharge
+    /** Constructeur surcharge. */
     public Livreur(int ID, String nom, String mail) {
         super(ID, nom, mail);
         this.statutDispo = true;
@@ -32,7 +31,7 @@ public class Livreur extends Utilisateur implements Evaluable {
         this.avis = new ArrayList<String>();
     }
 
-
+    /** Cas d'utilisation "Indiquer sa disponibilite". */
     public void modifierStatut(boolean dispo) {
         this.statutDispo = dispo;
         System.out.println("[" + nom + "] disponibilite = " + dispo);
@@ -58,11 +57,13 @@ public class Livreur extends Utilisateur implements Evaluable {
         System.out.println("[" + nom + "] modifierPosition() -> " + position);
     }
 
+    /** Ajoute un montant au solde du livreur (utilise pour le pourboire). */
     public void modifierSolde(double montant) {
         this.solde = this.solde + montant;
         System.out.println("[" + nom + "] modifierSolde(+" + montant + ") -> solde = " + solde + " EUR");
     }
 
+    /** Cas d'utilisation "Valider la livraison". */
     public void validerLivraison(Commande c) {
         System.out.println("[" + nom + "] validerLivraison()");
         c.changerStatut("commande livree");
@@ -74,10 +75,9 @@ public class Livreur extends Utilisateur implements Evaluable {
     }
 
     public int nbCourses() {
-        return courses.nbCommandes();
+        return courses.nbCommandes();   // <-- change : nbCommandes() au lieu de size()
     }
 
-    //Utilisation de l'interface
     @Override
     public void recevoirAvis(String avis) {
         this.avis.add(avis);
@@ -94,7 +94,6 @@ public class Livreur extends Utilisateur implements Evaluable {
         return avis.size();
     }
 
-    //Utilisation de la méthode abstraite
     @Override
     public void afficherActivite() {
         System.out.println("[" + nom + "] Livreur - disponible: " + statutDispo

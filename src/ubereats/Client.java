@@ -2,12 +2,11 @@ package ubereats;
 
 public class Client extends Utilisateur {
 
-    //Attributs
     private String adresse;
-    private HistoriqueCommandes historique;
+    private HistoriqueCommandes historique;   // 1 client -> 0..* commandes
     private double solde;
 
-    //Constructeur par défaut
+
     public Client() {
         super();
         this.adresse = "adresse inconnue";
@@ -15,7 +14,6 @@ public class Client extends Utilisateur {
         this.solde = 0.0;
     }
 
-    //Constructeur surcharge
     public Client(int ID, String nom, String mail) {
         super(ID, nom, mail);
         this.adresse = "12 rue de Paris";
@@ -29,7 +27,7 @@ public class Client extends Utilisateur {
         Commande c = new Commande(this, restaurant);
         c.ajouterPlat(plat, prix);
         c.calculerMontant();
-        historique.ajouterCommande(c);
+        historique.ajouterCommande(c);          // <-- changement ici
 
         payer(c, modePaiement);
         restaurant.prendreCommande(c);
@@ -95,15 +93,12 @@ public class Client extends Utilisateur {
             System.out.println("[" + nom + "] laisserPourboire(" + montant + " EUR) -> envoye au livreur");
         }
     }
-
-    //utilisation de la méthode abstraite
     @Override
     public void afficherActivite() {
         System.out.println("[" + nom + "] Client - solde: " + solde
                 + " EUR, commandes passees: " + historique.nbCommandes());
     }
 
-    //Utilisation de la collection
     public int nbCommandes() {
         return historique.nbCommandes();        // <-- changement ici
     }

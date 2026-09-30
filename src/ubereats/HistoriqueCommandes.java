@@ -10,6 +10,10 @@ public class HistoriqueCommandes implements Comparable<HistoriqueCommandes> {
         this.commandes = new ArrayList<Commande>();
     }
 
+    @Override
+    public int compareTo(HistoriqueCommandes autre) {
+        return Double.compare(this.montantTotal(), autre.montantTotal());
+    }
     public void ajouterCommande(Commande c) {
         commandes.add(c);
         System.out.println("   ajouterCommande() -> historique = " + commandes.size() + " commande(s)");
@@ -27,8 +31,4 @@ public class HistoriqueCommandes implements Comparable<HistoriqueCommandes> {
         return commandes.size();
     }
 
-    @Override
-    public int compareTo(HistoriqueCommandes autre) {
-        return Double.compare(this.montantTotal(), autre.montantTotal());
-    }
 }
