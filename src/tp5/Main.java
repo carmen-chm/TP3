@@ -66,8 +66,7 @@ public class Main {
             System.out.println("ERREUR : " + e.getMessage());
         }
 
-        // ================= Q1 : exceptions provoquees volontairement =================
-        System.out.println("\n===== Q1 : cas d'erreur =====");
+
 
         // 1) Solde insuffisant : SoldeInsuffisantException levee dans payer(), propagee par commander()
         try {
@@ -92,8 +91,6 @@ public class Main {
 
         client.afficherActivite();   // le solde n'a pas bouge pendant les erreurs
 
-        // ================= Q2 : fichier texte =================
-        System.out.println("\n===== Q2 : fichier texte commandes.txt =====");
         try {
             RecapCommande.ecrireFichierTexte("commandes.txt", recaps);
             System.out.println(recaps.size() + " commande(s) ecrite(s) dans commandes.txt");
@@ -107,8 +104,7 @@ public class Main {
             System.out.println("ERREUR d'ecriture : " + e.getMessage());
         }
 
-        // ================= Q3 : serialisation =================
-        System.out.println("\n===== Q3 : serialisation dans commandes.ser =====");
+
         try {
             RecapCommande.serialiser("commandes.ser", recaps);
             System.out.println(recaps.size() + " objet(s) serialise(s) dans commandes.ser");
@@ -123,12 +119,7 @@ public class Main {
         }
     }
 
-    /**
-     * TP5 - Q1 : exception declaree directement DANS la classe Main (pas de fichier a part).
-     * "static" : on peut la creer sans objet Main. "public" : les autres classes du package
-     * l'utilisent en l'appelant Main.RestaurantFermeException.
-     * Levee par Restaurant.accepterCommande() quand le restaurant est ferme.
-     */
+
     public static class RestaurantFermeException extends Exception {
 
         public RestaurantFermeException(String nomRestaurant) {

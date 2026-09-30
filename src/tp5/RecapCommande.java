@@ -12,15 +12,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * TP5 - Q2 et Q3 : les 5 informations d'une commande que l'on sauvegarde :
- * nom du restaurant, nom du client, nom du livreur, numero de commande, montant.
- *
- * Q2 : fichier texte, une ligne par commande, donnees separees par ';'
- *      exemple : Chez Mario;Lea;Hugo;1;12.5
- * Q3 : serialisation des memes objets dans un fichier binaire .ser
- *      (implements Serializable : l'interface n'a aucune methode, c'est un simple "marqueur").
- */
 public class RecapCommande implements Serializable {
 
     // numero de version de la classe, verifie a la deserialisation
@@ -53,7 +44,7 @@ public class RecapCommande implements Serializable {
                 + ", client = " + nomClient + ", livreur = " + nomLivreur + ", montant = " + montant + " EUR");
     }
 
-    // ================= Q2 : fichier texte =================
+    // Q2 : fichier texte
 
     /** Ecrit une ligne par commande : restaurant;client;livreur;numero;montant */
     public static void ecrireFichierTexte(String nomFichier, ArrayList<RecapCommande> liste) throws IOException {
@@ -77,7 +68,6 @@ public class RecapCommande implements Serializable {
         return liste;
     }
 
-    // ================= Q3 : serialisation =================
 
     /** Serialise les objets : d'abord leur nombre (writeInt), puis chaque objet (writeObject). */
     public static void serialiser(String nomFichier, ArrayList<RecapCommande> liste) throws IOException {

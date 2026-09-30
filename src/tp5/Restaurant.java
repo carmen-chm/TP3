@@ -44,13 +44,11 @@ public class Restaurant extends Utilisateur implements Evaluable {
     }
 
 
-    // TP5 : propage l'exception levee par accepterCommande()
     public void prendreCommande(Commande c) throws Main.RestaurantFermeException {
         System.out.println("   --> nouvelleCommande() recue par " + nom);
         accepterCommande(c);
     }
 
-    // TP5 : si le restaurant est ferme, on leve (throw) une Main.RestaurantFermeException
     public void accepterCommande(Commande c) throws Main.RestaurantFermeException {
         if (statutDispo) {
             System.out.println("[" + nom + "] accepterCommande() -> commande acceptee");
