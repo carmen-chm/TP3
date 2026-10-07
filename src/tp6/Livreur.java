@@ -1,4 +1,4 @@
-package tp5;
+package tp6;
 
 import java.util.ArrayList;
 
@@ -11,17 +11,7 @@ public class Livreur extends Utilisateur implements Evaluable {
     private ArrayList<String> avis;
 
 
-    /** Constructeur par defaut. */
-    public Livreur() {
-        super();
-        this.statutDispo = false;
-        this.position = "position inconnue";
-        this.solde = 0.0;
-        this.courses = new HistoriqueCommandes();
-        this.avis = new ArrayList<String>();
-    }
-
-    /** Constructeur surcharge. */
+    // TP6 : constructeur par defaut supprime (valeurs "inconnu" ecrites en dur, jamais utilise)
     public Livreur(int ID, String nom, String mail) {
         super(ID, nom, mail);
         this.statutDispo = true;

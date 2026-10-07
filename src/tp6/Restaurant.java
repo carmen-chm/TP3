@@ -1,4 +1,4 @@
-package tp5;
+package tp6;
 
 import java.util.ArrayList;
 
@@ -6,27 +6,15 @@ public class Restaurant extends Utilisateur implements Evaluable {
 
     //Atributs
     private boolean statutDispo;
-    private String adresse;
-    private ArrayList<String> menu;
+    private ArrayList<Plat> menu;      // TP6 : des Plat (nom + prix) au lieu de simples String
     private double solde;
     private ArrayList<String> avis;
 
-    //Constructeur par defaut
-    public Restaurant() {
-        super();
-        this.statutDispo = false;
-        this.adresse = "adresse inconnue";
-        this.menu = new ArrayList<String>();
-        this.solde = 0.0;
-        this.avis = new ArrayList<String>();
-    }
-
-    //Constructeur surcharge
-    public Restaurant(int ID, String nom, String mail) {
+    // TP6 : valeurs lues dans restaurants.txt (plus d'adresse ecrite en dur)
+    public Restaurant(int ID, String nom, String mail, boolean ouvert) {
         super(ID, nom, mail);
-        this.statutDispo = true;
-        this.adresse = "5 avenue des Gourmets";
-        this.menu = new ArrayList<String>();
+        this.statutDispo = ouvert;
+        this.menu = new ArrayList<Plat>();
         this.solde = 0.0;
         this.avis = new ArrayList<String>();
     }
@@ -38,24 +26,31 @@ public class Restaurant extends Utilisateur implements Evaluable {
     }
 
 
-    public void menu(String plat) {
+    public void ajouterPlat(Plat plat) {
         menu.add(plat);
-        System.out.println("[" + nom + "] menu() -> " + menu);
+    }
+
+    public ArrayList<Plat> getMenu() {
+        return menu;
+    }
+
+    public boolean estOuvert() {
+        return statutDispo;
     }
 
 
-    public void prendreCommande(Commande c) throws Main.RestaurantFermeException {
+    public void prendreCommande(Commande c) throws RestaurantFermeException {
         System.out.println("   --> nouvelleCommande() recue par " + nom);
         accepterCommande(c);
     }
 
-    public void accepterCommande(Commande c) throws Main.RestaurantFermeException {
+    public void accepterCommande(Commande c) throws RestaurantFermeException {
         if (statutDispo) {
             System.out.println("[" + nom + "] accepterCommande() -> commande acceptee");
             c.changerStatut("en preparation");
         } else {
             c.changerStatut("refusee");
-            throw new Main.RestaurantFermeException(nom);
+            throw new RestaurantFermeException(nom);
         }
     }
 

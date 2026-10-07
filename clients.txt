@@ -1,0 +1,3 @@
+# email;motDePasse;nom;adresse;solde
+lea@mail.com;1234;Lea;12 rue de Paris;55.0
+tom@mail.com;abcd;Tom;3 avenue Victor Hugo;30.0

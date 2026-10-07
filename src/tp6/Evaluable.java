@@ -1,4 +1,4 @@
-package tp5;
+package tp6;
 
 public interface Evaluable {
     void recevoirAvis(String avis);

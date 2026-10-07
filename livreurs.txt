@@ -1,0 +1,4 @@
+# nom;mail
+Hugo;hugo@mail.com
+Sarah;sarah@mail.com
+Karim;karim@mail.com

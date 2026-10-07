@@ -1,5 +1,7 @@
-package tp5;
+package tp6;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Commande {
@@ -19,17 +21,12 @@ public class Commande {
     private Livreur livreur;
     private String avis;
 
-    /** Constructeur par defaut. */
-    public Commande() {
-        this.date = "01/01/2026";
+    /** Une commande lie un client a un restaurant. */
+    public Commande(Client client, Restaurant restaurant) {
+        this.date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")); // TP6 : date du jour
         this.statut = "creee";
         this.montant = 0.0;
         this.contenu = new ArrayList<String>();
-    }
-
-    /** Constructeur surcharge : une commande lie un client a un restaurant. */
-    public Commande(Client client, Restaurant restaurant) {
-        this();                       // appel du constructeur par defaut
         this.client = client;
         this.restaurant = restaurant;
         compteur++;
@@ -38,11 +35,16 @@ public class Commande {
                 + ", " + restaurant.getNom() + ") : commande creee");
     }
 
+    /** TP6 : reprend la numerotation apres les commandes deja enregistrees (commandes.ser). */
+    public static void initialiserCompteur(int dernierNumero) {
+        compteur = dernierNumero;
+    }
+
     /** Ajoute un plat au contenu de la commande. */
-    public void ajouterPlat(String plat, double prix) {
-        contenu.add(plat + " (" + prix + " EUR)");
-        montant = montant + prix;
-        System.out.println("   ajouterPlat(\"" + plat + "\") -> contenu = " + contenu.size() + " plat(s)");
+    public void ajouterPlat(Plat plat) {
+        contenu.add(plat.getNom());
+        montant = montant + plat.getPrix();
+        System.out.println("   ajouterPlat(\"" + plat.getNom() + "\") -> contenu = " + contenu.size() + " plat(s)");
     }
 
     /** Calcule et retourne le montant total de la commande. */
@@ -73,6 +75,14 @@ public class Commande {
 
     public int getNumero() {
         return numero;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public ArrayList<String> getContenu() {
+        return contenu;
     }
 
     public Client getClient() {

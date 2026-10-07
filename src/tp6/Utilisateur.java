@@ -1,4 +1,4 @@
-package tp5;
+package tp6;
 
 public abstract class Utilisateur {
 
@@ -8,13 +8,7 @@ public abstract class Utilisateur {
     protected String mail;
     protected boolean connecte;
 
-    /** Constructeur par defaut (sans parametre). */
-    public Utilisateur() {
-        this.ID = 0;
-        this.nom = "inconnu";
-        this.mail = "inconnu@mail.com";
-        this.connecte = false;
-    }
+    // TP6 : constructeur par defaut supprime (valeurs "inconnu" ecrites en dur, jamais utilise)
 
     /** Constructeur surcharge avec parametres. */
     public Utilisateur(int ID, String nom, String mail) {
@@ -48,6 +42,10 @@ public abstract class Utilisateur {
 
     public int getID() {
         return ID;
+    }
+
+    public String getMail() {
+        return mail;
     }
 
     public abstract void afficherActivite();

@@ -1,0 +1,5 @@
+# nom;mail;ouvert|ferme;plat=prix;plat=prix;...
+Pizza Napoli;contact@napoli.fr;ouvert;Margherita=11;Calzone=13;Quatre fromages=14;Tiramisu=6
+Sushi Zen;contact@sushizen.fr;ouvert;Maki saumon=9;California roll=10;Ramen=15;Mochi=5
+Burger House;contact@burgerhouse.fr;ouvert;Cheeseburger=12;Double bacon=16;Frites=4;Milkshake=5
+Tacos Loco;contact@tacosloco.fr;ferme;Tacos poulet=10;Nachos=7;Churros=5

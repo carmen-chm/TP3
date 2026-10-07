@@ -1,37 +1,38 @@
-package tp5;
+package tp6;
+
+import java.util.ArrayList;
 
 public class Client extends Utilisateur {
 
+    private String motDePasse;
     private String adresse;
     private HistoriqueCommandes historique;   // 1 client -> 0..* commandes
     private double solde;
 
 
-    public Client() {
-        super();
-        this.adresse = "adresse inconnue";
-        this.historique = new HistoriqueCommandes();
-        this.solde = 0.0;
-    }
-
-    public Client(int ID, String nom, String mail) {
+    // TP6 : toutes les valeurs viennent de clients.txt (plus d'adresse ni de solde ecrits en dur)
+    public Client(int ID, String nom, String mail, String motDePasse, String adresse, double solde) {
         super(ID, nom, mail);
-        this.adresse = "12 rue de Paris";
+        this.motDePasse = motDePasse;
+        this.adresse = adresse;
         this.historique = new HistoriqueCommandes();
-        this.solde = 100.0;
+        this.solde = solde;
     }
 
 
-    // TP5 : commander() ne traite pas les erreurs, elle les PROPAGE (throws) au Main
-    public Commande commander(Restaurant restaurant, String plat, double prix, String modePaiement)
-            throws Main.RestaurantFermeException, SoldeInsuffisantException {
+    // TP5 : commander() ne traite pas les erreurs, elle les PROPAGE (throws) a l'appelant
+    // TP6 : la commande contient tous les plats du panier
+    public Commande commander(Restaurant restaurant, ArrayList<Plat> panier, String modePaiement)
+            throws RestaurantFermeException, SoldeInsuffisantException {
         System.out.println("[" + nom + "] passerCommande()");
         Commande c = new Commande(this, restaurant);
-        c.ajouterPlat(plat, prix);
+        for (Plat p : panier) {
+            c.ajouterPlat(p);
+        }
         c.calculerMontant();
 
         // TP5 : on verifie d'abord que le restaurant accepte (s'il est ferme, rien n'est paye)
-        restaurant.prendreCommande(c);   // peut lever Main.RestaurantFermeException
+        restaurant.prendreCommande(c);   // peut lever RestaurantFermeException
         payer(c, modePaiement);          // peut lever SoldeInsuffisantException
 
         historique.ajouterCommande(c);   // ajoutee seulement si tout s'est bien passe
@@ -110,6 +111,24 @@ public class Client extends Utilisateur {
     }
 
     public int nbCommandes() {
-        return historique.nbCommandes();        // <-- changement ici
+        return historique.nbCommandes();
+    }
+
+    // TP6 : verification du mot de passe a la connexion
+    public boolean motDePasseCorrect(String mdp) {
+        return motDePasse.equals(mdp);
+    }
+
+    // TP6 : accesseurs utilises pour l'affichage et pour reecrire clients.txt
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public double getSolde() {
+        return solde;
     }
 }
