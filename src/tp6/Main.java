@@ -96,7 +96,7 @@ public class Main {
 
         // ActionListener : clic sur "Voir le menu"
         fenetre.getBoutonVoirMenu().addActionListener(e -> {
-            int i = fenetre.getListeRestaurants().getSelectedIndex();   // -1 si rien n'est selectionne
+            int i = fenetre.getListeRestaurants().getSelectedIndex();                            // -1 si rien n'est selectionne
             if (i == -1) {
                 JOptionPane.showMessageDialog(fenetre, "Selectionnez un restaurant.");
                 return;

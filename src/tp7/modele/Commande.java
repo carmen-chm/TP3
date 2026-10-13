@@ -1,0 +1,114 @@
+package tp7.modele;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
+public class Commande {
+
+    // TP5 : compteur partage par toutes les commandes (static) pour donner un numero unique
+    private static int compteur = 0;
+
+    private int numero;
+    private String date;
+    private String statut;
+    private double montant;
+    private ArrayList<String> contenu;   // cardinalite > 1 => collection d'objets
+
+    // Association avec Client et Restaurant, agregation avec Livreur
+    private Client client;
+    private Restaurant restaurant;
+    private Livreur livreur;
+    private String avis;
+
+    /** Une commande lie un client a un restaurant. */
+    public Commande(Client client, Restaurant restaurant) {
+        this.date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")); // TP6 : date du jour
+        this.statut = "creee";
+        this.montant = 0.0;
+        this.contenu = new ArrayList<String>();
+        this.client = client;
+        this.restaurant = restaurant;
+        compteur++;
+        this.numero = compteur;
+        System.out.println("   >> new Commande n." + numero + " (" + client.getNom()
+                + ", " + restaurant.getNom() + ") : commande creee");
+    }
+
+    /** TP6 : reprend la numerotation apres les commandes deja enregistrees (commandes.ser). */
+    public static void initialiserCompteur(int dernierNumero) {
+        compteur = dernierNumero;
+    }
+
+    /** Ajoute un plat au contenu de la commande. */
+    public void ajouterPlat(Plat plat) {
+        contenu.add(plat.getNom());
+        montant = montant + plat.getPrix();
+        System.out.println("   ajouterPlat(\"" + plat.getNom() + "\") -> contenu = " + contenu.size() + " plat(s)");
+    }
+
+    /** Calcule et retourne le montant total de la commande. */
+    public double calculerMontant() {
+        System.out.println("   calculerMontant() -> " + montant + " EUR");
+        return montant;
+    }
+
+    /** Change le statut de la commande et notifie le client (message asynchrone). */
+    public void changerStatut(String nouveauStatut) {
+        this.statut = nouveauStatut;
+        System.out.println("   mettreAJour(\"" + nouveauStatut + "\")");
+        if (client != null) {
+            client.notifier(nouveauStatut);
+        }
+    }
+
+    /** Affecte un livreur a la commande (agregation Livreur 0..1 - Commande 0..*). */
+    public void affecterLivreur(Livreur livreur) {
+        this.livreur = livreur;
+    }
+
+    /** Enregistre l'avis laisse par le client. */
+    public void enregistrerAvis(String avis) {
+        this.avis = avis;
+        System.out.println("   enregistrerAvis() -> avis enregistre sur la commande");
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public ArrayList<String> getContenu() {
+        return contenu;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public double getMontant() {
+        return montant;
+    }
+
+    public String getAvis() {
+        return avis;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public Livreur getLivreur() {
+        return livreur;
+    }
+
+    // TP7 (MVC) : la methode afficher() (System.out) a ete supprimee du modele :
+    // l'affichage d'une commande est le role de la Vue (FenetreConfirmation).
+}

@@ -1,0 +1,2 @@
+Chez Mario;Lea;Hugo;1;12.5
+Chez Mario;Lea;Hugo;2;6.0

@@ -31,7 +31,7 @@ public class Client extends Utilisateur {
         }
         c.calculerMontant();
 
-        // TP5 : on verifie d'abord que le restaurant accepte (s'il est ferme, rien n'est paye)
+        //on verifie d'abord que le restaurant accepte (s'il est ferme, rien n'est paye)
         restaurant.prendreCommande(c);   // peut lever RestaurantFermeException
         payer(c, modePaiement);          // peut lever SoldeInsuffisantException
 
